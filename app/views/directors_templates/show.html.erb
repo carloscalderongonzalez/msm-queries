@@ -1,3 +1,16 @@
+<head>
+  <style>
+
+  .table-title {
+    justify-content: center;
+    font-weight: bold
+  }
+
+  </style>
+</head>
+
+<body>
+
 <h1>
   Director #<%= @the_director.id%> details
 </h1>
@@ -10,7 +23,7 @@
 
 <a href="/delete_director/<%= @the_director.id%>" class="btn btn-block btn-outline-secondary">
   Delete director
-  <small>(Building this link is not required. It's an optional stretch goal; but, you have the tools if you want to give it a try.)</small>
+
 </a>
 
 <hr>
@@ -41,7 +54,7 @@
     Image
   </dt>
   <dd>
-    <%= @the_director.image%>
+    <img src=<%= @the_director.image%>>
   </dd>
 
   <dt>
@@ -58,3 +71,45 @@
     <%= time_ago_in_words(@the_director.updated_at)%> ago
   </dd>
 </dl>
+
+<hr>
+
+<h2>Filmography</h2>
+
+<table border="1">
+<% @filmography.each do |a_film| %>
+  <tr class="table-title">
+    <td> ID </td>
+    <td> Image </td>
+    <td> Title </td>
+    <td> Year </td>
+    <td> Director </td>
+    <td>  </td>
+  </tr>
+  <tr>
+    <td>
+      <%= a_film.id%>
+    </td>
+    <td>
+      <img src=<%= a_film.image%>>
+    </td>
+    <td>
+      <%= a_film.title%>
+    </td>
+    <td>
+      <%= a_film.year%>
+    </td>
+    <td>
+      <% d= Director.where({ :id => a_film.director_id}).at(0) %>
+      <%= d.name %>
+    </td>
+    <td>
+    <a href="/movies/<%= d.id %>">
+      Show details
+    </a>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+</body>

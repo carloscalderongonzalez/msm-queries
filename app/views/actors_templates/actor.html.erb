@@ -1,0 +1,112 @@
+<head>
+  <style>
+
+  .table-title {
+    justify-content: center;
+    font-weight: bold
+  }
+
+  </style>
+</head>
+
+<body>
+
+  <h1>
+    Actor #<%= @the_actor.id%> details
+  </h1>
+
+  <a href="/actors" class="btn btn-block btn-outline-secondary">
+    Go back
+  </a>
+
+  &nbsp;|&nbsp;
+
+  <a href="/delete_movie/<%= @the_actor.id%> " class="btn btn-block btn-outline-secondary">
+    Delete movie
+  </a>
+
+  <hr>
+
+  <dl>
+    <dt>
+      Name
+    </dt>
+    <dd>
+      <%= @the_actor.name%>
+    </dd>
+
+    <dt>
+      Dob
+    </dt>
+    <dd>
+      <%= @the_actor.dob%>
+    </dd>
+
+    <dt>
+      Bio
+    </dt>
+    <dd>
+      <%= @the_actor.bio%>
+    </dd>
+
+    <dt>
+      Image
+    </dt>
+    <dd>
+      <img src=<%= @the_actor.image%> style="width:250px;">
+    </dd>
+
+    <dt>
+      Created at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_actor.created_at)%> ago
+    </dd>
+
+    <dt>
+      Updated at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_actor.updated_at)%> ago
+    </dd>
+  </dl>
+
+<hr>
+
+<h2>Filmography</h2>
+
+
+
+<table border="1">
+<% @characters.each do |a_character| %>
+  <tr class="table-title">
+    <td> Title </td>
+    <td> Year </td>
+    <td> Director </td>
+    <td> Character name </td>
+    <td>  </td>
+  </tr>
+  <tr>
+    <% d= Movie.where({ :id => a_character.movie_id}).at(0) %>
+    <td>
+      <%= d.title %>
+    </td>
+    <td>
+      <%= d.year %>
+    </td>
+    <td>
+      <% x= Director.where({ :id => d.director_id}).at(0) %>
+      <%= x.name %>
+    </td>
+    <td>
+      <%= a_character.name %>
+    </td>
+    <td>
+    <a href="/movies/<%= d.id %>">
+      Show details
+    </a>
+    </td>
+  </tr>
+<% end %>
+
+</body>
